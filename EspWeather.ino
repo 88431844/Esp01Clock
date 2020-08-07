@@ -181,7 +181,7 @@ void updateDisplay(void) {
     dd = String(days);
   }
   String myTime = h + ":" + m ;
-  String myDate = mm + "月" + dd + "日";
+  String myDate = mm + "/" + dd ;
   String myWeek = w.substring(0, 3);
   Serial.println("-----------------");
   Serial.println("myTime: " + myTime);
@@ -196,6 +196,7 @@ void updateDisplay(void) {
   display.setTextColor(WHITE);
   display.setCursor(0, 0);
   display.println(myTime);
+  display.println(myDate);
   display.display();
 }
 void configModeCallback (WiFiManager *myWiFiManager) {
