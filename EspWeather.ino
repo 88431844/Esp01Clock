@@ -48,7 +48,7 @@ time_t previousMinute = 0;
 
 void setup() {
   Serial.begin(115200);
-
+  Wire.begin(0, 2);
   // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     Serial.println(F("SSD1306 allocation failed"));
