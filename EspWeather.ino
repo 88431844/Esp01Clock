@@ -191,11 +191,12 @@ void updateDisplay(void) {
 
 
   //////process display////////
+  display.clearDisplay();
   display.setTextSize(4);
   display.setTextColor(WHITE);
   display.setCursor(0, 0);
   display.println(myTime);
-
+  display.display();
 }
 void configModeCallback (WiFiManager *myWiFiManager) {
   display.println("wifi connect fail");
