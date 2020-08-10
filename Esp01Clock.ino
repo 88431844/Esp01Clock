@@ -80,7 +80,7 @@ void setup() {
   WiFiManager wifiManager;
 
   wifiManager.setAPCallback(configModeCallback);
-  if (!wifiManager.autoConnect("EspWeather")) {
+  if (!wifiManager.autoConnect("Esp01Clock")) {
     Serial.println("failed to connect and hit timeout");
     //reset and try again, or maybe put it to deep sleep
     ESP.reset();
