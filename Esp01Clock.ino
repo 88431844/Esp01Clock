@@ -14,27 +14,6 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 #define NUMFLAKES     10 // Number of snowflakes in the animation example
 
-#define LOGO_HEIGHT   16
-#define LOGO_WIDTH    16
-static const unsigned char PROGMEM logo_bmp[] =
-{ B00000000, B11000000,
-  B00000001, B11000000,
-  B00000001, B11000000,
-  B00000011, B11100000,
-  B11110011, B11100000,
-  B11111110, B11111000,
-  B01111110, B11111111,
-  B00110011, B10011111,
-  B00011111, B11111100,
-  B00001101, B01110000,
-  B00011011, B10100000,
-  B00111111, B11100000,
-  B00111111, B11110000,
-  B01111100, B11110000,
-  B01110000, B01110000,
-  B00000000, B00110000
-};
-
 
 #include "NTP.h"
 #include <Time.h>
@@ -60,23 +39,10 @@ void setup() {
   // the library initializes this with an Adafruit splash screen.
   display.display();
   delay(2000); // Pause for 2 seconds
-
   // Clear the buffer
   display.clearDisplay();
 
-  // Draw a single pixel in white
-  display.drawPixel(10, 10, WHITE);
-
-  // Show the display buffer on the screen. You MUST call display() after
-  // drawing commands to make them visible on screen!
-  display.display();
-  delay(2000);
-
-  display.setTextSize(1);      // Normal 1:1 pixel scale
-  display.setTextColor(WHITE); // Draw white text
-  display.setCursor(0, 0);
-  display.println("WIFI CONNECTING");
-  display.display();
+  wifiStatus("WIFI CONNECTING");
 
   WiFiManager wifiManager;
 
@@ -88,8 +54,8 @@ void setup() {
     delay(1000);
   }
 
-  display.println("WIFI CONNECTED");
-  display.display();
+  wifiStatus("WIFI CONNECTED");
+
   initNTP();
 
 }
@@ -105,26 +71,6 @@ void loop() {
     }
   }
   delay(500);
-}
-
-void testdrawstyles(void) {
-  display.clearDisplay();
-
-  display.setTextSize(1);             // Normal 1:1 pixel scale
-  display.setTextColor(WHITE);        // Draw white text
-  display.setCursor(0, 0);            // Start at top-left corner
-  display.println(F("Hello, world!"));
-
-  display.setTextSize(2);
-  display.setTextColor(BLACK, WHITE); // Draw 'inverse' text
-  display.println("18:24");
-
-  display.setTextSize(2);             // Draw 2X-scale text
-  display.setTextColor(WHITE);
-  display.println("18:25");
-
-  display.display();
-  delay(2000);
 }
 void updateDisplay(void) {
 
@@ -189,21 +135,29 @@ void updateDisplay(void) {
   Serial.println("myDate: " + myDate);
   Serial.println("myWeek: " + myWeek);
 
-
-
   //////process display////////
   display.clearDisplay();
   display.setTextSize(4);
   display.setTextColor(WHITE);
-  display.setCursor(0, 0);
+  display.setCursor(5, 10);
   display.println(myTime);
-  display.println(myDate);
+
+  display.setCursor(8, 50);
+  display.setTextSize(2);
+  display.print(myDate);
+  display.setCursor(80, 50);
+  display.print(myWeek);
   display.display();
 }
 void configModeCallback (WiFiManager *myWiFiManager) {
-  display.println("wifi connect fail");
+  wifiStatus("WIFI CONNECT FAIL");
+}
+
+void wifiStatus(String myWiFiStatus) {
+  display.clearDisplay();
+  display.setCursor(0, 30);
   display.setTextSize(1);
-  display.setTextColor(BLACK, WHITE); // Draw 'inverse' text
-  display.println("wifi connect fail");
+  display.setTextColor(WHITE);
+  display.println(myWiFiStatus);
   display.display();
 }
