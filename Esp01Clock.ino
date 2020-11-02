@@ -27,10 +27,10 @@ time_t previousMinute = 0;
 
 void setup() {
   Serial.begin(115200);
-  //esp01 GPIO0 和 GPIO2 充当IIC总线
+  //esp01 GPIO0 和 GPIO2 充当IIC总线,esp8266 引脚GPIO0->D3 ,GPIO0->D4(D1 mini 引脚一样)
   Wire.begin(0, 2);
   // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
-  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {//0x3C就是这个地址，不要看0.96OLED后面那个地址选择的值
     Serial.println(F("SSD1306 allocation failed"));
     for (;;); // Don't proceed, loop forever
   }
